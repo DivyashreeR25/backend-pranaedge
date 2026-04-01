@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from backend.db.mongo import profiles_collection
-from backend.services.groq_client import call_groq
+from db.mongo import profiles_collection
+from services.groq_client import call_groq
 from bson import ObjectId
-from backend.utils.auth import get_current_user
+from utils.auth import get_current_user
 from fastapi import Depends
 
 router = APIRouter()

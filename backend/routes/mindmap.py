@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
-from backend.db.mongo import analysis_collection
+from db.mongo import analysis_collection
 
 router = APIRouter()
 
-from backend.utils.auth import get_current_user
+from utils.auth import get_current_user
 from fastapi import Depends
 
 @router.get("/mindmap")

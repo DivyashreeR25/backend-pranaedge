@@ -1,5 +1,5 @@
 from langchain_community.chat_message_histories import ChatMessageHistory
-from backend.db.mongo import session_memory_collection, profile_history_collection
+from db.mongo import session_memory_collection, profile_history_collection
 from datetime import datetime
 
 # In-memory store: one history object per user

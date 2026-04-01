@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from backend.db.mongo import analysis_collection
-from backend.services.groq_client import call_groq
-from backend.services.memory import load_past_sessions, save_interaction
+from db.mongo import analysis_collection
+from services.groq_client import call_groq
+from services.memory import load_past_sessions, save_interaction
 import json
 
 router = APIRouter()
@@ -13,7 +13,7 @@ class DietRequest(BaseModel):
     meal_type: str
 
 
-from backend.utils.auth import get_current_user
+from utils.auth import get_current_user
 from fastapi import Depends
 
 @router.post("/diet")

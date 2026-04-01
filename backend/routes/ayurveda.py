@@ -1,14 +1,14 @@
 from fastapi import APIRouter, HTTPException
-from backend.db.mongo import profiles_collection, analysis_collection
-from backend.services.groq_client import call_groq
-from backend.services.rag import retrieve_ayurveda_context
+from db.mongo import profiles_collection, analysis_collection
+from services.groq_client import call_groq
+from services.rag import retrieve_ayurveda_context
 from bson import ObjectId
 import json
 
 router = APIRouter()
 
 
-from backend.utils.auth import get_current_user
+from utils.auth import get_current_user
 from fastapi import Depends
 
 @router.get("/ayurveda")
