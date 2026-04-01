@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
-from models.payment import PaymentRequest, PaymentResponse
-from db.mongo import payments_collection
+from backend.models.payment import PaymentRequest, PaymentResponse
+from backend.db.mongo import payments_collection
 from datetime import datetime
 import random, string
 
-from utils.auth import get_current_user
+from backend.utils.auth import get_current_user
 
 router = APIRouter()
 

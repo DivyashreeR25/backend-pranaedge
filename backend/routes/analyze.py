@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException
-from db.mongo import profiles_collection, analysis_collection
-from services.groq_client import call_groq
-from services.memory import load_past_sessions, save_interaction, get_trend_summary
+from backend.db.mongo import profiles_collection, analysis_collection
+from backend.services.groq_client import call_groq
+from backend.services.memory import load_past_sessions, save_interaction, get_trend_summary
 from bson import ObjectId
 import json
 
 router = APIRouter()
 
-from utils.auth import get_current_user
+from backend.utils.auth import get_current_user
 from fastapi import Depends
 
 async def run_analysis(user_id: str = Depends(get_current_user)):

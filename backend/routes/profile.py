@@ -1,14 +1,14 @@
 from fastapi import APIRouter, HTTPException, Depends
-from models.user import HealthProfile, ProfileResponse, LoginRequest, LoginResponse
-from db.mongo import profiles_collection, profile_history_collection
-from services.memory import get_trend_summary
+from backend.models.user import HealthProfile, ProfileResponse, LoginRequest, LoginResponse
+from backend.db.mongo import profiles_collection, profile_history_collection
+from backend.services.memory import get_trend_summary
 from bson import ObjectId
 from datetime import datetime
 
 # ✅ NEW IMPORTS
-from utils.security import hash_password, verify_password
-from utils.jwt_handler import create_token
-from utils.auth import get_current_user
+from backend.utils.security import hash_password, verify_password
+from backend.utils.jwt_handler import create_token
+from backend.utils.auth import get_current_user
 
 router = APIRouter()
 

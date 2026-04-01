@@ -2,7 +2,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+load_dotenv(dotenv_path="backend/.env")
 
 MONGO_URI = os.getenv("MONGO_URI")
 DB_NAME = os.getenv("DB_NAME")
@@ -25,7 +25,7 @@ async def ping_db():
         await client.admin.command("ping")
         print("✅ MongoDB connected successfully")
         # Build RAG knowledge base if not exists
-        from services.rag import get_vectorstore
+        from backend.services.rag import get_vectorstore
         get_vectorstore()
         print("✅ Ayurveda knowledge base ready")
     except Exception as e:

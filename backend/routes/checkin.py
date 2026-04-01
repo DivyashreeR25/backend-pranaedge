@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from db.mongo import profiles_collection, session_memory_collection
-from services.memory import save_interaction
+from backend.db.mongo import profiles_collection, session_memory_collection
+from backend.services.memory import save_interaction
 from bson import ObjectId
 from datetime import datetime
 
@@ -14,7 +14,7 @@ class CheckinRequest(BaseModel):
     stress_level: int  # 1-10
 
 
-from utils.auth import get_current_user
+from backend.utils.auth import get_current_user
 from fastapi import Depends
 
 @router.post("/checkin")

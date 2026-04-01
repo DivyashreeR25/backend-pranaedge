@@ -1,16 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from db.mongo import ping_db
-from routes import profile, analyze, yoga, meditation, diet, mindmap, summary, checkin, wellness, report, ayurveda, affirmation, payment
-
-
+from backend.db.mongo import ping_db
+from backend.routes import profile, analyze, yoga, meditation, diet, mindmap, summary, checkin, wellness, report, ayurveda, affirmation, payment
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await ping_db()
     yield
-
 
 app = FastAPI(
     title="PranaEdge API",

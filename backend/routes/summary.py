@@ -1,14 +1,14 @@
 from fastapi import APIRouter, HTTPException
-from db.mongo import analysis_collection, daily_summary_collection
-from services.groq_client import call_groq
-from services.memory import load_past_sessions, get_trend_summary
+from backend.db.mongo import analysis_collection, daily_summary_collection
+from backend.services.groq_client import call_groq
+from backend.services.memory import load_past_sessions, get_trend_summary
 from datetime import datetime
 import json
 
 router = APIRouter()
 
 
-from utils.auth import get_current_user
+from backend.utils.auth import get_current_user
 from fastapi import Depends
 
 @router.get("/summary")

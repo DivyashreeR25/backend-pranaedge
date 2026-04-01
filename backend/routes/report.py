@@ -1,11 +1,11 @@
 from fastapi import APIRouter, HTTPException
-from db.mongo import (
+from backend.db.mongo import (
     profiles_collection,
     analysis_collection,
     session_memory_collection,
     profile_history_collection
 )
-from services.groq_client import call_groq
+from backend.services.groq_client import call_groq
 from bson import ObjectId
 from datetime import datetime, timedelta
 import json
@@ -13,7 +13,7 @@ import json
 router = APIRouter()
 
 
-from utils.auth import get_current_user
+from backend.utils.auth import get_current_user
 from fastapi import Depends
 
 @router.get("/report/weekly")

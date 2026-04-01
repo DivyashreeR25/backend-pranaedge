@@ -1,12 +1,12 @@
 from fastapi import APIRouter, HTTPException
-from db.mongo import profiles_collection, analysis_collection, session_memory_collection
+from backend.db.mongo import profiles_collection, analysis_collection, session_memory_collection
 from bson import ObjectId
 from datetime import datetime, timedelta
 
 router = APIRouter()
 
 
-from utils.auth import get_current_user
+from backend.utils.auth import get_current_user
 from fastapi import Depends
 
 @router.get("/wellness-score")
