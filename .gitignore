@@ -1,0 +1,117 @@
+# =========================
+
+# 🔐 Environment Variables
+
+# =========================
+
+.env
+.env.*
+*.env
+
+# =========================
+
+# 🐍 Python (Backend)
+
+# =========================
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+
+venv/
+env/
+ENV/
+.venv/
+
+# Python build files
+
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+
+*.log
+
+# =========================
+
+# ⚛️ Node / React (Frontend)
+
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build folders
+
+build/
+dist/
+.next/
+out/
+
+# =========================
+
+# 🗄️ Database / Storage
+
+# =========================
+
+*.db
+*.sqlite3
+
+# =========================
+
+# 📦 OS Files
+
+# =========================
+
+.DS_Store
+Thumbs.db
+
+# =========================
+
+# 🧠 IDE / Editor Files
+
+# =========================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =========================
+
+# 🔐 Secrets / Keys
+
+# =========================
+
+*.pem
+*.key
+*.crt
+
+# =========================
+
+# 🧪 Testing / Coverage
+
+# =========================
+
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =========================
+
+# 📁 Misc
+
+# =========================
+
+*.zip
+*.tar.gz
+*.rar
