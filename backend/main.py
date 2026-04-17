@@ -29,8 +29,6 @@ app.add_middleware(
 
 app.include_router(profile.router, tags=["Profile"])
 app.include_router(analyze.router, tags=["Analysis"]) 
-app.include_router(profile.router, tags=["Profile"])
-app.include_router(analyze.router, tags=["Analysis"])
 app.include_router(yoga.router, tags=["Yoga"])
 app.include_router(meditation.router, tags=["Meditation"])
 app.include_router(diet.router, tags=["Diet"])
