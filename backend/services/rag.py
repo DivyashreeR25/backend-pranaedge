@@ -1,6 +1,13 @@
 import requests
-import numpy as np
 import os
+
+# 🔑 HuggingFace config
+HF_TOKEN = os.getenv("HF_TOKEN")
+API_URL = "https://api-inference.huggingface.co/models/google/flan-t5-small"
+
+headers = {
+    "Authorization": f"Bearer {HF_TOKEN}"
+}
 
 # Ayurveda + Yoga knowledge base
 KNOWLEDGE_BASE = [
@@ -132,45 +139,70 @@ KNOWLEDGE_BASE = [
     }
 ]
 
+# 🔍 Simple retrieval
+def retrieve_ayurveda_context(query: str, k: int = 3):
+    query = query.lower()
+    scored = []
 
-HF_TOKEN = os.getenv("HF_TOKEN")
+    for item in KNOWLEDGE_BASE:
+        content = item["content"].lower()
+        score = sum(word in content for word in query.split())
+        if score > 0:
+            scored.append((score, item["content"]))
 
-API_URL = "https://api-inference.huggingface.co/pipeline/feature-extraction/sentence-transformers/all-MiniLM-L6-v2"
+    scored.sort(reverse=True, key=lambda x: x[0])
+    top = [doc for _, doc in scored[:k]]
 
-headers = {
-    "Authorization": f"Bearer {HF_TOKEN}"
-}
-
-# 🔹 Get embedding from HuggingFace API
-def get_embedding(text):
-    response = requests.post(
-        API_URL,
-        headers=headers,
-        json={"inputs": text}
-    )
-    return response.json()[0]
+    return "\n".join(top)
 
 
-# 🔹 Precompute embeddings once
-DOCUMENTS = [item["content"] for item in KNOWLEDGE_BASE]
-DOC_EMBEDDINGS = [get_embedding(doc) for doc in DOCUMENTS]
+# 🤖 HF GENERATION (SAFE)
+def generate_with_hf(prompt: str):
+    try:
+        response = requests.post(
+            API_URL,
+            headers=headers,
+            json={"inputs": prompt},
+            timeout=15
+        )
+
+        print("HF RAW RESPONSE:", response.text)
+
+        if response.status_code != 200:
+            return f"HF Error: {response.text}"
+
+        data = response.json()
+
+        # HF sometimes returns list
+        if isinstance(data, list) and len(data) > 0:
+            return data[0].get("generated_text", "No response generated")
+
+        # If error response
+        if isinstance(data, dict) and "error" in data:
+            return f"HF Error: {data['error']}"
+
+        return "No valid response from AI"
+
+    except Exception as e:
+        return f"HF Exception: {str(e)}"
 
 
-# 🔹 Cosine similarity
-def cosine_similarity(a, b):
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+# 🌿 MAIN FUNCTION (used in ayurveda route)
+def retrieve_ayurveda_response(query: str):
+    context = retrieve_ayurveda_context(query)
 
+    prompt = f"""
+You are an expert Ayurvedic doctor.
 
-# 🔹 Retrieve relevant context
-def retrieve_ayurveda_context(query: str, k: int = 3) -> str:
-    query_embedding = get_embedding(query)
+Use the context below to answer the user's question.
 
-    scores = [
-        cosine_similarity(query_embedding, emb)
-        for emb in DOC_EMBEDDINGS
-    ]
+Context:
+{context}
 
-    top_indices = np.argsort(scores)[-k:][::-1]
+Question:
+{query}
 
-    context = "\n\n".join([DOCUMENTS[i] for i in top_indices])
-    return context
+Give a clear, helpful Ayurvedic answer.
+"""
+
+    return generate_with_hf(prompt)
