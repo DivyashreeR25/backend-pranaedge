@@ -91,12 +91,27 @@ async def get_yoga_sequence(user_id: str = Depends(get_current_user)):
         raise HTTPException(status_code=404, detail="Run POST /analyze/{user_id} first")
 
     past_yoga = await load_past_sessions(user_id, module="yoga", limit=5)
-    recommended = [p["pose"] for p in analysis.get("recommended_yoga_poses", [])]
-    poses_to_avoid = [p["pose"] for p in analysis.get("poses_to_avoid", [])]
+    recommended = [
+    p.get("pose")
+    for p in analysis.get("recommended_yoga_poses", [])
+    if p.get("pose")
+]
 
-    past_poses = [s.get("user_input", {}).get("pose_name") for s in past_yoga]
-    past_context = f"Previously practiced: {', '.join(past_poses)}" if past_poses else "No past practice recorded"
+    poses_to_avoid = [
+    p.get("pose")
+    for p in analysis.get("poses_to_avoid", [])
+    if p.get("pose")
+]
+    past_poses = [
+    str(s.get("user_input", {}).get("pose_name"))
+    for s in past_yoga
+    if s.get("user_input", {}).get("pose_name") is not None
+]
 
+    past_context = (
+    f"Previously practiced: {', '.join(past_poses)}"
+    if past_poses else "No past practice recorded")
+    
     prompt = f"""
 You are a professional yoga instructor designing a complete session.
 
