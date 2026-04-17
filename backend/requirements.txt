@@ -44,6 +44,7 @@ zstandard==0.25.0
 pydantic[email]
 langchain-community
 python-jose[cryptography]
+sentence-transformers
 groq
 langchain-chroma
 bcrypt==4.0.1
