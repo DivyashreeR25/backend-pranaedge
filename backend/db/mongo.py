@@ -24,9 +24,5 @@ async def ping_db():
     try:
         await client.admin.command("ping")
         print("✅ MongoDB connected successfully")
-        # Build RAG knowledge base if not exists
-        from services.rag import get_vectorstore
-        get_vectorstore()
-        print("✅ Ayurveda knowledge base ready")
     except Exception as e:
         print(f"❌ MongoDB connection failed: {e}")
